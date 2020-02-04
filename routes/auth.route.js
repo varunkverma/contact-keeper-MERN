@@ -5,13 +5,21 @@ const jwt = require("jsonwebtoken");
 const { check, validationResult } = require("express-validator");
 
 const User = require("../models/User");
+const authMiddleware = require("../middlewares/auth.middleware");
 
 const router = express.Router();
+
 // @route   GET api/auth
 // @desc    Get logged in user
 // @access  Private
-router.get("/", (req, res) => {
-  res.send("Get logged in user");
+router.get("/", authMiddleware, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.log(err.message);
+    res.status(400).send("Server Error");
+  }
 });
 
 // @route   POST api/auth
