@@ -106,6 +106,28 @@ router.put("/:id", authMiddleware, async (req, res) => {
 // @route   DELETE api/contacts/:id
 // @desc    delete a contect
 // @access  Private
-router.delete("/:id", authMiddleware, async (req, res) => {});
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    // Fetch the contact from database
+    const contact = await Contact.findById(req.params.id);
+
+    // check if contact exists
+    if (!contact) {
+      return res.status(400).send({ msg: "Contact doesn't exist" });
+    }
+
+    // check if the user owns this contact
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized" });
+    }
+
+    // Remove the contact
+    await Contact.findByIdAndRemove(req.params.id);
+    res.json({ msg: "Contact removed" });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;
