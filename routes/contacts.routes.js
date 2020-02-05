@@ -63,13 +63,49 @@ router.post(
 // @route   PUT api/contacts/:id
 // @desc    Update a contect
 // @access  Private
-router.put("/:id", authMiddleware, async (req, res) => {});
+router.put("/:id", authMiddleware, async (req, res) => {
+  // check whether contact with the id exists
+  try {
+    let contact = await Contact.findById(req.params.id);
+    if (!contact) {
+      return res.status(404).send({ msg: "Contact not found" });
+    }
+
+    // check of the user owns the contact
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: "Not authorized" });
+    }
+
+    // taking out fields from the found contact
+    const { name, email, phone, type } = req.body;
+
+    // build contact's field
+    let contactFields = {};
+    if (name) contactFields.name = name;
+    if (email) contactFields.email = email;
+    if (phone) contactFields.phone = phone;
+    if (type) contactFields.type = type;
+
+    console.log(contactFields);
+
+    // update the contact
+    contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: contactFields
+      },
+      { new: true }
+    );
+    res.json(contact);
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   DELETE api/contacts/:id
 // @desc    delete a contect
 // @access  Private
-router.delete("/:id", (req, res) => {
-  res.send("Delete contact");
-});
+router.delete("/:id", authMiddleware, async (req, res) => {});
 
 module.exports = router;
