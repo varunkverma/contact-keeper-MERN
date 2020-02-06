@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm run start --prefix client",
+    "clientinstall": "npm run --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "author": "varun verma",
   "license": "ISC",
