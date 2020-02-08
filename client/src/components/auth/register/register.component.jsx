@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import AlertContext from "../../../context/alert/alertContext";
 const Register = () => {
   const [user, setUser] = useState({
     name: "",
@@ -8,6 +8,10 @@ const Register = () => {
     confirmPassword: ""
   });
 
+  const alertContext = useContext(AlertContext);
+
+  const { setAlert } = alertContext;
+
   const { name, email, password, confirmPassword } = user;
 
   const handleOnChange = e =>
@@ -15,7 +19,14 @@ const Register = () => {
 
   const handleOnSubmit = e => {
     e.preventDefault();
-    console.log("Register Successful");
+
+    if (name === "" || email === "" || password === "") {
+      setAlert("Please enter all the fields", "danger");
+    } else if (password !== confirmPassword) {
+      setAlert("Password and Confirm password do not match", "danger");
+    } else {
+      console.log("Registration successful");
+    }
   };
 
   return (
@@ -31,6 +42,7 @@ const Register = () => {
             name="name"
             value={name}
             onChange={handleOnChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -40,6 +52,7 @@ const Register = () => {
             name="email"
             value={email}
             onChange={handleOnChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -49,6 +62,8 @@ const Register = () => {
             name="password"
             value={password}
             onChange={handleOnChange}
+            required
+            minLength="6"
           />
         </div>
         <div className="form-group">
@@ -58,6 +73,8 @@ const Register = () => {
             name="confirmPassword"
             value={confirmPassword}
             onChange={handleOnChange}
+            required
+            minLength="6"
           />
         </div>
         <input
