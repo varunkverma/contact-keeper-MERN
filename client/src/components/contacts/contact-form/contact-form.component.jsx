@@ -64,6 +64,7 @@ const ContactForm = () => {
         placeholder="Name"
         value={name}
         onChange={handleOnChange}
+        required
       />
       <input
         type="text"
@@ -71,6 +72,7 @@ const ContactForm = () => {
         placeholder="Email"
         value={email}
         onChange={handleOnChange}
+        required
       />
       <input
         type="text"
@@ -78,6 +80,7 @@ const ContactForm = () => {
         placeholder="phone"
         value={phone}
         onChange={handleOnChange}
+        required
       />
       <h5>Contact Type</h5>
       <input
