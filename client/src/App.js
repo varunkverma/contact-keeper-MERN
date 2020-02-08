@@ -8,6 +8,8 @@ import AuthState from "./context/auth/AuthState";
 import Navbar from "./components/layout/navbar.component";
 import Home from "./components/pages/home.component";
 import About from "./components/pages/about.component";
+import Register from "./components/auth/register/register.component";
+
 const App = () => (
   <AuthState>
     <ContactState>
@@ -18,6 +20,7 @@ const App = () => (
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/about" component={About} />
+              <Route exact path="/register" component={Register} />
             </Switch>
           </div>
         </div>
