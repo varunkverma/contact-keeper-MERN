@@ -11,6 +11,11 @@ import Home from "./components/pages/home.component";
 import About from "./components/pages/about.component";
 import Register from "./components/auth/register/register.component";
 import Login from "./components/auth/login/login.component";
+import setAuthToken from "./utils/setAuthToken";
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => (
   <AuthState>
