@@ -8,11 +8,11 @@ const ContactItem = ({ contact }) => {
   const { current } = contactContext;
   const { deleteContact, setCurrent, clearCurrent } = contactContext;
 
-  const { id, name, email, type, phone } = contact;
+  const { _id, name, email, type, phone } = contact;
 
   const handleDelete = () => {
     if (contact === current) clearCurrent();
-    deleteContact(id);
+    deleteContact(_id);
   };
   return (
     <div className="card bg-light">
