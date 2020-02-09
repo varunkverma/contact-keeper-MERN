@@ -16,9 +16,19 @@ const Login = props => {
 
   const authContext = useContext(AuthContext);
 
-  const { loginUser, error, clearErrors, isAuthenticated } = authContext;
+  const {
+    loginUser,
+    error,
+    clearErrors,
+    isAuthenticated,
+    loadUser
+  } = authContext;
 
   useEffect(() => {
+    if (localStorage.token) {
+      loadUser();
+    }
+
     if (isAuthenticated) {
       props.history.push("/");
     }
