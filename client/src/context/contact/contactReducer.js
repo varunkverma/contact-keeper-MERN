@@ -12,7 +12,6 @@ import {
 } from "../types";
 
 export default (state, action) => {
-  console.log(action.type);
   switch (action.type) {
     case GET_CONTACTS:
       return {

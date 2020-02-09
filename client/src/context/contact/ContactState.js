@@ -38,7 +38,7 @@ const ContactState = props => {
     };
     try {
       const res = await axios.get("/api/contacts", config);
-      console.log(res.data);
+
       dispatch({
         type: GET_CONTACTS,
         payload: res.data
@@ -63,8 +63,6 @@ const ContactState = props => {
     try {
       const res = await axios.post("/api/contacts", newContact, config);
 
-      console.log(res);
-
       dispatch({
         type: ADD_CONTACT,
         payload: { ...res.data }
@@ -85,11 +83,7 @@ const ContactState = props => {
       }
     };
     try {
-      const res = await axios.put(
-        `/api/contacts/${contact._id}`,
-        contact,
-        config
-      );
+      await axios.put(`/api/contacts/${contact._id}`, contact, config);
 
       dispatch({
         type: UPDATE_CONTACT,
@@ -112,7 +106,7 @@ const ContactState = props => {
     };
 
     try {
-      const res = await axios.delete(`/api/contacts/${id}`, config);
+      await axios.delete(`/api/contacts/${id}`, config);
 
       dispatch({
         type: DELETE_CONTACT,
